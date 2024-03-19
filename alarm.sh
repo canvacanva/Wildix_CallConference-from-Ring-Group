@@ -10,7 +10,7 @@ ConfName='<ConferenzaAllarme>'
 
 APIGroup= curl -u $APIuser:$APIpwd -s -X GET 'http://'$PBX'/api/v1/Dialplan/CallGroups/' | jq -r '.result.records[] | select(.id=='$IDGroup') | .members[]' | cut -c -3 > /tmp/list_call.log
 sleep 2
-api=$(curl -u $APIuser:$APIpwd -X POST 'http://'$PBX'/api/v1/Originate' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'channel=Local/'$UserStart'@pbxinternal' --data-urlencode 'exten=98123' --data-urlencode 'context=users' --data-urlencode 'context=users' --data-urlencode 'callerid=98123' --data-urlencode 'async=true')
+api=$(curl -u $APIuser:$APIpwd -X POST 'http://'$PBX'/api/v1/Originate' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'channel=Local/'$UserStart'@pbxinternal' --data-urlencode 'exten=98123' --data-urlencode 'context=users' --data-urlencode 'context=users' --data-urlencode 'callerid='$ConfName'' --data-urlencode 'async=true')
 sleep 2
 cat /tmp/list_call.log | while read line || [[ -n $line ]];
 	do
